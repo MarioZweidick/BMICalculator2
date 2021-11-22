@@ -10,6 +10,11 @@ public class BMICalculator
     double bodyWeight;
     char gender;
 
+    /*Constructor...must have the same name as the class! Can be generated using "ALT+EINF" --> Constructor
+      If you want to have all variables in the parameterlist, select all of them in the dialog that shows up
+      after selecting "constructor"
+      parameter list = all elements between () after function name. In our case
+      firstname, lastname, bodyheight, bodyweight, gender*/
     public BMICalculator(String firstname, String lastname, int bodyHeight, double bodyWeight, char gender)
     {
         this.firstname = firstname;
@@ -19,11 +24,20 @@ public class BMICalculator
         this.gender = gender;
     }
 
-    public double calculateBMI()
-    {
-        return Math.round(bodyWeight / ((double)(bodyHeight / 100) * ((double)bodyHeight / 100)));
+    private double round(double value) {
+        return Math.round(value * 100) / 100D;
     }
 
+    public double calculateBMI()
+    {
+        double bmi = round(bodyWeight / (((double)bodyHeight / 100) * ((double)bodyHeight / 100)));
+        return bmi;
+    }
+
+    /*Calculates the BMI category based on the calculated bmi.
+      Used switch-case, which works similar to if-else. In our case, the "gender" is the condition we wanna check.
+      case 'm': means the same as "if(gender = 'm')
+      In my case, I am also checking for capital letters....*/
     public int calculateBMICategory()
     {
         double bmi = calculateBMI();
@@ -59,10 +73,13 @@ public class BMICalculator
                     return 2;
             }
         }
-        //Error-Case. If the program has reached that point, a wrong gender was entered.
+        /*Error-Case. If the program has reached that point, a gender that is not defined in the calculation
+         list was entered. E.g. 'd' for divers (used it for person 3 in my test cases and in BMIDemoApp)
+         I want to return 100 in that case to show that something went wrong while calculating the result*/
         return 100;
     }
 
+    //Checking for the category name... In case of person 3 (gender = d), result will be "invalid weight class"
     public String getBMICategoryName()
     {
         int category = calculateBMICategory();
@@ -82,6 +99,8 @@ public class BMICalculator
 
     }
 
+    /*Setter method for bodyweight. You could use it to override an already set value
+    (after creating object using constructor)*/
     public void setBodyHeight(int bodyHeight)
     {
         this.bodyHeight = bodyHeight;
@@ -92,6 +111,7 @@ public class BMICalculator
         this.bodyWeight = bodyWeight;
     }
 
+    //Getter method to access corresponding value, after initialization using the constructor
     public String getFirstname()
     {
         return firstname;
